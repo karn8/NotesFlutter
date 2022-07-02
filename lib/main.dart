@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynote/firebase_options.dart';
 import 'package:mynote/views/login_view.dart';
 import 'package:mynote/views/register_view.dart';
+import 'package:mynote/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,10 @@ void main() {
         primarySwatch: Colors.green,
       ),
       home: const HomePage(),
+      routes: {
+        '/login/': (context) => const LoginView(),
+        '/register/': (context) => const RegisterView() 
+      },
     ),);
 }
 
@@ -21,31 +26,29 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: FutureBuilder(
+    return FutureBuilder(
         future: Firebase.initializeApp(
               options: DefaultFirebaseOptions.currentPlatform,
               ),
         builder:(context, snapshot) {
           switch (snapshot.connectionState){
             case ConnectionState.done:
-              final User = FirebaseAuth.instance.currentUser;
-              
-              if (User?.emailVerified ?? false){
-                print('Oh its you! ');
-              } else {
-                print('You need to verify your email first');
-              }
-              return const Text('Done');
+              // final user = FirebaseAuth.instance.currentUser;
+              // print(user);
+              // if (user?.emailVerified ?? false){
+              //   return const Text('Done');
+              // } else {
+              //   return const VerifyemailView();
+              // }
+              return const LoginView();
             default: 
-              return const Text("I swear its the server...");  
+              return const CircularProgressIndicator();  
         }
           
         },
       
-      ),
-    );
+      );
   }
   
 }
+
