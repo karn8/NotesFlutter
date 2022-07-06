@@ -12,13 +12,14 @@ void main() {
   runApp(MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.cyan,
       ),
       home: const HomePage(),
       routes: {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NotesView()
+        notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyemailView(),
       },
     ),);
 }
@@ -119,7 +120,8 @@ Future<bool> showLogOutDialog(BuildContext context){
               Navigator.of(context).pop(true);
             },
             child: const Text('Log Out')
-          )
+          ),
+          
         ],
       );
     },).then((value) => value?? false);
