@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mynote/firebase_options.dart';
 import 'package:mynote/services/auth/auth_user.dart';
 import 'package:mynote/services/auth/auth_provider.dart';
 import 'package:mynote/services/auth/auth_exceptions.dart';
@@ -19,24 +21,24 @@ class FirebaseAuthProvider implements AuthProvider {
           return user;
         }
         else{
-          throw UserNotLoggedInAuthExceotion();
+          throw UserNotLoggedInAuthException();
         }
     } on FirebaseAuthException catch(e) {
                   if (e.code == 'weak-password'){
-                    throw WeakPasswordAuthExceotion();
+                    throw WeakPasswordAuthException();
                   }
                   else if(e.code=='email-already-in-use'){
-                    throw EmailAlreadyInUseAuthExceotion();
+                    throw EmailAlreadyInUseAuthException();
                   }
                   else if(e.code=='invalid-email'){
-                    throw InvaidEmailAuthExceotion();
+                    throw InvaidEmailAuthException();
                   }
                   else{
-                    throw GenericAuthExceotion();
+                    throw GenericAuthException();
                   }
 
     } catch (_) {
-      throw GenericAuthExceotion();
+      throw GenericAuthException();
     }
   }
 
@@ -61,7 +63,7 @@ class FirebaseAuthProvider implements AuthProvider {
           return user;
         }
         else{
-          throw UserNotLoggedInAuthExceotion();
+          throw UserNotLoggedInAuthException();
         }
 
     } on FirebaseAuthException catch(e) {
@@ -72,11 +74,11 @@ class FirebaseAuthProvider implements AuthProvider {
                     throw WrongPasswordAuthExcpetion();
                   }
                   else {
-                    throw GenericAuthExceotion();
+                    throw GenericAuthException();
                   }
                 }
                 catch (_) {
-                 throw GenericAuthExceotion();
+                 throw GenericAuthException();
                 }
   }
 
@@ -87,7 +89,7 @@ class FirebaseAuthProvider implements AuthProvider {
       await FirebaseAuth.instance.signOut();
     }
     else{
-      throw UserNotLoggedInAuthExceotion();
+      throw UserNotLoggedInAuthException();
     }
   }
 
@@ -97,8 +99,14 @@ class FirebaseAuthProvider implements AuthProvider {
     if (user != null){
       await user.sendEmailVerification();
     } else {
-      throw UserNotLoggedInAuthExceotion();
+      throw UserNotLoggedInAuthException();
     }
   }
-  
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+              options: DefaultFirebaseOptions.currentPlatform,
+              );
+  }
 }
