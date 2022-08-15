@@ -12,7 +12,7 @@ class NewNoteView extends StatefulWidget {
 
 class _NewNoteViewState extends State<NewNoteView> {
 
-  DatabaseNotes? _notes;
+  DatabaseNote? _notes;
   late final NotesService _notesService;
   late final TextEditingController _textController;
 
@@ -30,7 +30,7 @@ class _NewNoteViewState extends State<NewNoteView> {
     }
     final text = _textController.text;
     await _notesService.updateNote(
-      notes: note, 
+      note: note, 
       text: text,
       );
   }
@@ -40,7 +40,7 @@ class _NewNoteViewState extends State<NewNoteView> {
     _textController.addListener(_textControllerListener);
   }
 
-  Future<DatabaseNotes> createNewNote() async {
+  Future<DatabaseNote> createNewNote() async {
     final existingNote = _notes;
     if (existingNote != null){
       return existingNote;
@@ -63,7 +63,7 @@ class _NewNoteViewState extends State<NewNoteView> {
     final text = _textController.text;
     if(note != null && text.isNotEmpty){
       await _notesService.updateNote(
-        notes: note, 
+        note: note, 
         text: text);
     }
   }
@@ -85,7 +85,7 @@ class _NewNoteViewState extends State<NewNoteView> {
         builder: (context, snapshot) {
           switch(snapshot.connectionState){
             case ConnectionState.done:
-              _notes = snapshot.data as DatabaseNotes;
+              _notes = snapshot.data as DatabaseNote;
               _setupTextControllerListener();
               return TextField(
                 controller: _textController,

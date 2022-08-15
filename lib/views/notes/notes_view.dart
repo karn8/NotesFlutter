@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mynote/constants/routes.dart';
 import 'package:mynote/services/auth/auth_service.dart';
 import 'package:mynote/services/crud/notes_service.dart';
+import 'package:path/path.dart';
 import '../../enums/menu_action.dart';
 
 class NotesView extends StatefulWidget {
@@ -25,11 +26,11 @@ class _NotesViewState extends State<NotesView> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _notesService.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,31 @@ class _NotesViewState extends State<NotesView> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                     case ConnectionState.active:
-                      return const Text('Retrieving your notes...');
+                      if(snapshot.hasData){
+                        final allNotes = snapshot.data as List<DatabaseNote>;
+                        return ListView.builder(
+                          itemCount: allNotes.length,
+                          itemBuilder: (Context, index){
+                            final note = allNotes[index];
+                            return Container(
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 243, 235, 218)
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  note.text,
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      else{
+                        return const CircularProgressIndicator();
+                      }
                     default:
                       return const Center(child: CircularProgressIndicator());
                   }
