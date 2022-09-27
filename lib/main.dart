@@ -22,7 +22,6 @@ void main() {
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyemailView(),
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
-        
       },
     ),);
 }
