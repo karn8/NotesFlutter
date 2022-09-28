@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 void main() {
   group('Mock Authentication', () {
     final provider = MockAuthProvider();
-    test('Shoul dnot be initialized to begin with', () {
+    test('Should not be initialized to begin with', () {
       expect(provider.isInitialized, false);
     });
 
