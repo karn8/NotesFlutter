@@ -6,7 +6,6 @@ import 'package:mynote/constants/routes.dart';
 import 'package:mynote/services/auth/auth_service.dart';
 import 'package:mynote/services/auth/bloc/auth_bloc.dart';
 import 'package:mynote/services/auth/bloc/auth_event.dart';
-import 'package:mynote/services/auth/bloc/auth_state.dart';
 import 'package:mynote/services/cloud/cloud_note.dart';
 import 'package:mynote/services/cloud/firebase_cloud_storage.dart';
 import 'package:mynote/views/notes/notes_list_view.dart';
