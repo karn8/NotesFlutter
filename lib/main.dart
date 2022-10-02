@@ -15,6 +15,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -24,10 +25,6 @@ void main() {
         child: const HomePage(),
       ),
       routes: {
-        loginRoute: (context) => const LoginView(),
-        registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NotesView(),
-        verifyEmailRoute: (context) => const VerifyemailView(),
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
       },
     ),
@@ -50,6 +47,9 @@ class HomePage extends StatelessWidget {
       }
       else if (state is AuthStateLoggedOut){
         return const LoginView();
+      }
+      else if(state is AuthStateRegistering) {
+        return const RegisterView();
       }
       else {
         return const Scaffold(
