@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mynote/constants/routes.dart';
+import 'package:mynote/helpers/loading/loading_screen.dart';
 import 'package:mynote/services/auth/bloc/auth_bloc.dart';
 import 'package:mynote/services/auth/bloc/auth_event.dart';
 import 'package:mynote/services/auth/bloc/auth_state.dart';
@@ -18,7 +19,8 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.lime,
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
@@ -38,7 +40,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
 
-    return BlocBuilder<AuthBloc, AuthState>(builder:(context, state) {
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if(state.isLoading){
+          LoadingScreen().show(
+            context: context, 
+            text: state.loadingText ?? "Please wait a moment"
+          );
+        }
+        else {
+          LoadingScreen().hide();
+        }
+      },
+      builder:(context, state) {
       if (state is AuthStateLoggedIn){
         return const NotesView();
       }

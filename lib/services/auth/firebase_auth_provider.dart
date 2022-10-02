@@ -12,6 +12,7 @@ class FirebaseAuthProvider implements AuthProvider {
     required String password,
   }) async {
     try{
+      await Future.delayed(const Duration(seconds: 1));
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email, 
         password: password
