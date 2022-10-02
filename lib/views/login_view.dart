@@ -5,11 +5,11 @@ import 'package:mynote/constants/routes.dart';
 import 'package:mynote/services/auth/auth_exceptions.dart';
 import 'package:mynote/services/auth/bloc/auth_bloc.dart';
 import 'package:mynote/services/auth/bloc/auth_event.dart';
+import 'package:mynote/services/auth/bloc/auth_state.dart';
 import '../utilities/dialogs/error_dialog.dart';
 
-
 class LoginView extends StatefulWidget {
-  const LoginView({ Key? key }) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -32,65 +32,64 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Column(
-            children: [
-              TextField(controller: _email,
+        children: [
+          TextField(
+              controller: _email,
               enableSuggestions: false,
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 hintText: 'Enter your Email ID',
-              )
-                ),
-              TextField(controller: _password,
-              obscureText: true ,
+              )),
+          TextField(
+              controller: _password,
+              obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
               decoration: const InputDecoration(
                 hintText: 'Enter Password',
-              )
-                ),
-              TextButton(onPressed: () async {
-                final email= _email.text;
-                final password= _password.text;
-                try{
-                  context.read<AuthBloc>().add(
-                    AuthEventLogIn(
-                      email, 
-                      password)
-                  );
-                } on UserNotFoundAuthException {
-                  devtools.log('User not found');
-                  await showErrorDialog(
-                      context, 
-                      'User not found',);
-                } on WrongPasswordAuthExcpetion {
-                  devtools.log('Wrong Password');
-                    await showErrorDialog(
-                      context, 
-                      'Wrong credentials',);
-                } on GenericAuthException {
-                  await showErrorDialog(
-                      context, 
-                      'Authentication Error',);
+              )),
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if(state is AuthStateLoggedOut){
+                if(state.exception is UserNotFoundAuthException){
+                  await showErrorDialog(context, 'User not found');
                 }
-              },
-              child: const Text('Login'),),
-              TextButton(onPressed:  () {
-                Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, 
-                (route) => false);
+                else if(state.exception is WrongPasswordAuthExcpetion){
+                  await showErrorDialog(context, 'Wrong credentials');
+                }
+                else if(state.exception is GenericAuthException){
+                  await showErrorDialog(context, 'Authentication error');
+                }
               }
-              , child: const Text('Not registered? Register now'))
-            ],
+            },
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(
+                  AuthEventLogIn(
+                    email, 
+                    password
+                    )
+                  );
+              },
+              child: const Text('Login'),
+            ),
           ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+              },
+              child: const Text('Not registered? Register now'))
+        ],
+      ),
     );
-   
-  
   }
 }
-
