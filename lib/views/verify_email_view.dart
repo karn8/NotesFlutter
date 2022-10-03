@@ -17,8 +17,8 @@ class _VerifyemailViewState extends State<VerifyemailView> {
     return  Scaffold(
       appBar: AppBar(title: const Text('Email Verification')),
       body: Column(children: [
-             const Text("We have sent you an Email verification, Please open it to verify your account\n"),
-             const Text('If you havent recieved the Email, Press the button below'),
+             const Text("We have sent you an Email verification, Please open it to verify your account then head back to login\n"),
+             const Text('If you haven\'t recieved the Email, Press the button below'),
              
              TextButton(onPressed: (){
               context.read<AuthBloc>().add(const AuthEventSendEmailVerification());
