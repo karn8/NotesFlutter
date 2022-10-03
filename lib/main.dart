@@ -20,6 +20,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'FiraCode',
         brightness: Brightness.dark,
         primarySwatch: Colors.lime,
       ),

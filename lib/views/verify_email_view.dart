@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mynote/services/auth/auth_service.dart';
 import 'package:mynote/services/auth/bloc/auth_bloc.dart';
 import 'package:mynote/services/auth/bloc/auth_event.dart';
-import '../constants/routes.dart';
+
 
 class VerifyemailView extends StatefulWidget {
   const VerifyemailView({ Key? key }) : super(key: key);

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mynote/helpers/loading/loading_screen_controller.dart';
 import 'package:mynote/services/auth/auth_provider.dart';
 import 'package:mynote/services/auth/bloc/auth_event.dart';
 import 'package:mynote/services/auth/bloc/auth_state.dart';

@@ -45,6 +45,7 @@ dependencies:
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_test:
@@ -86,11 +87,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: FiraCode
   #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  #       - asset: Z:\Google Flutter\FlutterProjects\mynote\assets\FiraCode-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
